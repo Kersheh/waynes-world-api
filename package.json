@@ -1,0 +1,25 @@
+{
+  "name": "waynes-world-api",
+  "version": "0.1.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "nodemon ./src/index.ts",
+    "start:prod": "NODE_ENV=production node ./build/index.js",
+    "build": "tsc --project tsconfig.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/config": "0.0.36",
+    "@types/express": "^4.17.8",
+    "@types/node": "^14.11.2",
+    "nodemon": "^2.0.4",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  }
+}
