@@ -1,6 +1,6 @@
 import SpotifyApi from '../modules/spotify';
 
-export const getAlbum = async () => {
+export const getArtistAlbums = async () => {
   try {
     const res = await SpotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE');
     console.log('res', res);

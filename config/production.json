@@ -3,7 +3,6 @@
     "port": 8700
   },
   "spotify": {
-    "clientId": "",
-    "clientSecret": ""
+    "clientId": "aa4dcf2b7f5e4586a5ba7c2858c59b18"
   }
 }

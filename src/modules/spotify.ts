@@ -3,7 +3,7 @@ import SpotifyWebApi from 'spotify-web-api-node';
 
 const SpotifyApi = new SpotifyWebApi({
   clientId: config.get('spotify.clientId'),
-  clientSecret: config.get('spotify.clientSecret')
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET
 });
 
 export const setSpotifyAccessToken = async () => {
