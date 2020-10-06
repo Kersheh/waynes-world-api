@@ -1,5 +1,9 @@
 {
   "server": {
     "port": 8700
+  },
+  "spotify": {
+    "clientId": "",
+    "clientSecret": ""
   }
 }

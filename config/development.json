@@ -1,5 +1,9 @@
 {
   "server": {
     "port": 3100
+  },
+  "spotify": {
+    "clientId": "",
+    "clientSecret": ""
   }
 }

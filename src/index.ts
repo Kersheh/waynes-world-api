@@ -1,11 +1,20 @@
-import express from 'express';
 import config from 'config';
+import app from './app';
+import { setSpotifyAccessToken } from './modules/spotify';
 
-const app = express();
-const PORT = config.get('server.port');
+// setup api routes
+import './api';
 
-app.get('/', (_, res) => res.send('Express + TypeScript Server'));
+(async () => {
+  try {
+    await setSpotifyAccessToken();
 
-app.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
-});
+    const PORT = config.get('server.port');
+    app.listen(PORT, () => {
+      console.log(`[server]: Server is running at http://localhost:${PORT}`);
+    });
+  } catch(err) {
+    console.log('Server failed to start.', err);
+    process.exit(1);
+  }
+})();
