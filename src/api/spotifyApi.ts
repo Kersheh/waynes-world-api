@@ -1,9 +1,26 @@
 import app from '../app';
-import { getArtistAlbums } from '../services/spotifyService';
+import SpotifyApi from '../modules/spotify';
 
-app.get('/spotify/search', async (_, res) => {
-  const results = await getArtistAlbums();
-  console.log(results);
+app.get('/spotify/search', async (req, res) => {
+  const { q } = req.query;
 
-  res.send('Spotify search endpoint');
+  try {
+    const results = await SpotifyApi.search(q as string, ['artist', 'album']);
+    res.send(results);
+  } catch(err) {
+    console.error('Failed to fetch spotify artist/albums search results:', err);
+    res.status(500).send();
+  }
+});
+
+app.get('/spotify/albums', async (req, res) => {
+  const { artist } = req.query;
+
+  try {
+    const results = await SpotifyApi.getArtistAlbums(artist as string, { limit: 10 });
+    res.send(results);
+  } catch(err) {
+    console.error(`Failed to fetch ablums by artist ${artist} search results:`, err);
+    res.status(500).send();
+  }
 });

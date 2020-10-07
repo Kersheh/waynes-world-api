@@ -2,6 +2,9 @@
   "server": {
     "port": 8700
   },
+  "cors": {
+    "origin": "http://localhost:80"
+  },
   "spotify": {
     "clientId": "aa4dcf2b7f5e4586a5ba7c2858c59b18"
   }
