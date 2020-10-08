@@ -16,4 +16,18 @@ export const setSpotifyAccessToken = async () => {
   }
 };
 
+export const safeSpotifyRequest = async (spotifyReq: Function, retry = true) => {
+  try {
+    return spotifyReq();
+  } catch(err) {
+    console.error(err);
+
+    // refresh token and retry request
+    if (retry) {
+      await setSpotifyAccessToken();
+      safeSpotifyRequest(spotifyReq, false);
+    }
+  }
+};
+
 export default SpotifyApi;
