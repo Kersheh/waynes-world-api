@@ -5,6 +5,10 @@
   "cors": {
     "origin": "http://localhost:3000"
   },
+  "mongo": {
+    "uri": "mongodb://localhost:27017/",
+    "dbName": "waynes-world:dev"
+  },
   "spotify": {
     "clientId": "39f32427d4014b90a647d6a7f0561dd7"
   }

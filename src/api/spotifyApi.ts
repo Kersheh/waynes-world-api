@@ -5,13 +5,15 @@ app.get('/spotify/search', async (req, res) => {
   const { q } = req.query;
 
   try {
-    const results = await safeSpotifyRequest(
-      () => SpotifyApi.search(q as string, ['artist', 'album'])
+    const results = await safeSpotifyRequest(() =>
+      SpotifyApi.search(q as string, ['artist', 'album'])
     );
     res.send(results);
-  } catch(err) {
+  } catch (err) {
     console.error('Failed to fetch spotify artist/albums search results:', err);
-    res.status(500).send();
+    res.status(500).send({
+      message: `Failed to search Spotify for ${q}`
+    });
   }
 });
 
@@ -19,12 +21,17 @@ app.get('/spotify/albums', async (req, res) => {
   const { artist } = req.query;
 
   try {
-    const results = await safeSpotifyRequest(
-      () => SpotifyApi.getArtistAlbums(artist as string, { limit: 10 })
+    const results = await safeSpotifyRequest(() =>
+      SpotifyApi.getArtistAlbums(artist as string, { limit: 10 })
     );
     res.send(results);
-  } catch(err) {
-    console.error(`Failed to fetch ablums by artist ${artist} search results:`, err);
-    res.status(500).send();
+  } catch (err) {
+    console.error(
+      `Failed to fetch albums by artist ${artist} search results:`,
+      err
+    );
+    res.status(500).send({
+      message: `Failed to search Spotify albums for artist ${artist}`
+    });
   }
 });
