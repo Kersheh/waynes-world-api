@@ -20,4 +20,4 @@ export class Album {
   public comments?: string;
 }
 
-export default getModelForClass(Album);
+export default getModelForClass(Album, { schemaOptions: { timestamps: true } });
