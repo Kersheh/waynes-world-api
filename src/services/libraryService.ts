@@ -1,5 +1,9 @@
 import AlbumModel, { Album } from '../models/Album';
 
+export const getAlbums = async () => {
+  return AlbumModel.find();
+};
+
 export const addAlbum = async (album: Album) => {
   return AlbumModel.create(album);
 };

@@ -20,4 +20,17 @@ export class Album {
   public comments?: string;
 }
 
-export default getModelForClass(Album, { schemaOptions: { timestamps: true } });
+export default getModelForClass(Album, {
+  schemaOptions: {
+    timestamps: true,
+    toJSON: {
+      transform: (_, data) => {
+        const { __v, _id, ...object } = data;
+        return {
+          ...object,
+          id: _id
+        };
+      }
+    }
+  }
+});

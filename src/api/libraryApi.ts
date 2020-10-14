@@ -1,5 +1,15 @@
 import app from '../app';
-import { addAlbum, updateAlbum } from '../services/libraryService';
+import { getAlbums, addAlbum, updateAlbum } from '../services/libraryService';
+
+app.get('/library', async (_, res) => {
+  try {
+    const data = await getAlbums();
+    res.status(200).send(data);
+  } catch (err) {
+    console.error('Failed to fetch albums');
+    res.status(500).send({ message: 'Failed to fetch all albums' });
+  }
+});
 
 app.post('/library/album', async (req, res) => {
   const album = req.body;
