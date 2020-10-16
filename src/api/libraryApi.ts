@@ -1,5 +1,10 @@
 import app from '../app';
-import { getAlbums, addAlbum, updateAlbum } from '../services/libraryService';
+import {
+  getAlbums,
+  addAlbum,
+  updateAlbum,
+  deleteAlbum
+} from '../services/libraryService';
 
 app.get('/library', async (_, res) => {
   try {
@@ -36,6 +41,20 @@ app.put('/library/album/:id', async (req, res) => {
     console.error(`Failed to update album ${id}:`, err);
     res.status(500).send({
       message: `Failed to update album ${album.album} for id ${id}`
+    });
+  }
+});
+
+app.delete('/library/album/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await deleteAlbum(id);
+    res.status(200).send();
+  } catch (err) {
+    console.error(`Failed to delete album ${id}:`, err);
+    res.status(500).send({
+      message: `Failed to delete album id ${id}`
     });
   }
 });
