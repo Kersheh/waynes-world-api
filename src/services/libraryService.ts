@@ -5,7 +5,8 @@ export const getAlbums = async () => {
 };
 
 export const addAlbum = async (album: Album) => {
-  return AlbumModel.create(album);
+  const { _id: id } = await AlbumModel.create(album);
+  return id;
 };
 
 export const updateAlbum = async (id: string, album: Album) => {
