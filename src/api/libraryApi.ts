@@ -1,3 +1,5 @@
+import { parseISO, isBefore } from 'date-fns';
+
 import app from '../app';
 import {
   getAlbums,
@@ -9,9 +11,17 @@ import {
 app.get('/library', async (_, res) => {
   try {
     const data = await getAlbums();
-    res.status(200).send(data);
+
+    res.status(200).send({
+      albumsAll: data,
+      albumsRecentlyAdded: data
+        .sort((a: any, b: any) =>
+          isBefore(parseISO(a.createdAt), parseISO(b.createdAt)) ? 1 : -1
+        )
+        .slice(10)
+    });
   } catch (err) {
-    console.error('Failed to fetch albums');
+    console.error('Failed to fetch albums', err);
     res.status(500).send({ message: 'Failed to fetch all albums' });
   }
 });
