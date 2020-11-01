@@ -5,8 +5,19 @@ export const getAlbums = async () => {
 };
 
 export const addAlbum = async (album: Album) => {
-  const { _id: id } = await AlbumModel.create(album);
-  return id;
+  const existingAlbum = await AlbumModel.findOne({
+    album: album.album,
+    artist: album.artist
+  });
+
+  if (!existingAlbum) {
+    const { _id: id } = await AlbumModel.create(album);
+    return id;
+  } else {
+    throw new Error(
+      `Album ${album.album} by artist ${album.artist} already exists.`
+    );
+  }
 };
 
 export const updateAlbum = async (id: string, album: Album) => {

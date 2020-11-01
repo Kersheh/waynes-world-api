@@ -18,7 +18,7 @@ app.get('/library', async (_, res) => {
         .sort((a: any, b: any) =>
           isBefore(parseISO(a.createdAt), parseISO(b.createdAt)) ? 1 : -1
         )
-        .slice(10)
+        .slice(0, 10)
     });
   } catch (err) {
     console.error('Failed to fetch albums', err);
@@ -34,9 +34,7 @@ app.post('/library/album', async (req, res) => {
     res.status(201).send({ id });
   } catch (err) {
     console.error('Failed to create album:', err);
-    res.status(500).send({
-      message: `Failed to create album ${album.album}`
-    });
+    res.status(500).send({ message: err.message });
   }
 });
 
