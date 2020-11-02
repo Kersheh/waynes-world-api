@@ -1,5 +1,5 @@
-import app from '../app';
-import SpotifyApi, { safeSpotifyRequest } from '../modules/spotify';
+import app from 'app';
+import SpotifyApi, { safeSpotifyRequest } from 'modules/spotify';
 
 app.get('/spotify/search', async (req, res) => {
   const { q } = req.query;

@@ -1,12 +1,12 @@
 import { parseISO, isBefore } from 'date-fns';
 
-import app from '../app';
+import app from 'app';
 import {
   getAlbums,
   addAlbum,
   updateAlbum,
   deleteAlbum
-} from '../services/libraryService';
+} from 'services/libraryService';
 
 app.get('/library', async (_, res) => {
   try {

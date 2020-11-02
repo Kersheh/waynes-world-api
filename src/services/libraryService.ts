@@ -1,4 +1,4 @@
-import AlbumModel, { Album } from '../models/Album';
+import AlbumModel, { Album } from 'models/Album';
 
 export const getAlbums = async () => {
   return AlbumModel.find();

@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "main": "src/index.ts",
   "scripts": {
-    "start": "nodemon ./src/index.ts",
+    "start": "NODE_PATH=./src nodemon ./src/index.ts",
     "build": "tsc --project tsconfig.json",
-    "prod": "NODE_ENV=production node ./build/index.js",
+    "prod": "NODE_ENV=production NODE_PATH=./build node ./build/index.js",
     "lint": "eslint -c .eslintrc.yml 'src/**/*.ts'",
     "lint:fix": "eslint -c .eslintrc.yml 'src/**/*.ts' --fix",
     "db:up": "docker-compose up -d",

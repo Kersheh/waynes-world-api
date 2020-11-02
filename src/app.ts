@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import corsConfigured from './modules/cors';
+
+import corsConfigured from 'modules/cors';
 
 const app = express();
 app.use(bodyParser.json());
