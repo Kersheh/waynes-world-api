@@ -32,6 +32,9 @@ export class Album {
 
   @prop({ type: String })
   public comments?: string;
+
+  @prop({ type: String })
+  public artBase64?: string;
 }
 
 export default getModelForClass(Album);
