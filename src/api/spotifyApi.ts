@@ -17,6 +17,22 @@ app.get('/spotify/search', async (req, res) => {
   }
 });
 
+app.get('/spotify/album', async (req, res) => {
+  const { id } = req.query;
+
+  try {
+    const results = await safeSpotifyRequest(() =>
+      SpotifyApi.getAlbum(id as string)
+    );
+    res.send(results);
+  } catch (err) {
+    console.error(`Failed to fetch album id ${id} info:`, err);
+    res.status(500).send({
+      message: `Failed to fetch album ${id} info from Spotify`
+    });
+  }
+});
+
 app.get('/spotify/albums', async (req, res) => {
   const { artist } = req.query;
 
@@ -32,6 +48,22 @@ app.get('/spotify/albums', async (req, res) => {
     );
     res.status(500).send({
       message: `Failed to search Spotify albums for artist ${artist}`
+    });
+  }
+});
+
+app.get('/spotify/artist', async (req, res) => {
+  const { id } = req.query;
+
+  try {
+    const results = await safeSpotifyRequest(() =>
+      SpotifyApi.getArtist(id as string)
+    );
+    res.send(results);
+  } catch (err) {
+    console.error(`Failed to fetch artist id ${id} info:`, err);
+    res.status(500).send({
+      message: `Failed to fetch artist ${id} info from Spotify`
     });
   }
 });

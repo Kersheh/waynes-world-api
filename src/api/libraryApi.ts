@@ -5,16 +5,22 @@ import {
   getAlbums,
   addAlbum,
   updateAlbum,
-  deleteAlbum
+  deleteAlbum,
+  AlbumSort
 } from 'services/libraryService';
 
-app.get('/library', async (_, res) => {
+app.get('/library', async (req, res) => {
+  const { sort, order } = req.query;
+
   try {
-    const data = await getAlbums();
+    const data = await getAlbums({
+      sortBy: sort,
+      order
+    } as AlbumSort);
 
     res.status(200).send({
-      albumsAll: data,
-      albumsRecentlyAdded: data
+      albumsAll: data.albumsAllSorted,
+      albumsRecentlyAdded: data.albumsAll
         .sort((a: any, b: any) =>
           isBefore(parseISO(a.createdAt), parseISO(b.createdAt)) ? 1 : -1
         )
