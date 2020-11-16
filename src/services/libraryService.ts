@@ -79,3 +79,11 @@ export const updateAlbum = async (id: string, album: Album) => {
 export const deleteAlbum = async (id: string) => {
   return AlbumModel.deleteOne({ _id: id });
 };
+
+export const favouriteAlbum = async (id: string) => {
+  return AlbumModel.updateOne({ _id: id }, { favourite: true });
+};
+
+export const unfavouriteAlbum = async (id: string) => {
+  return AlbumModel.updateOne({ _id: id }, { favourite: false });
+};

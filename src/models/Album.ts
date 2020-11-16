@@ -35,6 +35,9 @@ export class Album {
 
   @prop({ type: String })
   public artBase64?: string;
+
+  @prop({ type: Boolean })
+  public favourite = false;
 }
 
 export default getModelForClass(Album);

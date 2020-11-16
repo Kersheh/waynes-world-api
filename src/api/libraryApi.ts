@@ -6,6 +6,8 @@ import {
   addAlbum,
   updateAlbum,
   deleteAlbum,
+  favouriteAlbum,
+  unfavouriteAlbum,
   AlbumSort
 } from 'services/libraryService';
 
@@ -69,6 +71,34 @@ app.delete('/library/album/:id', async (req, res) => {
     console.error(`Failed to delete album ${id}:`, err);
     res.status(500).send({
       message: `Failed to delete album id ${id}`
+    });
+  }
+});
+
+app.put('/library/album/favourite/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await favouriteAlbum(id);
+    res.status(200).send();
+  } catch (err) {
+    console.error(`Failed to favourite album ${id}:`, err);
+    res.status(500).send({
+      message: `Failed to favourite album id ${id}`
+    });
+  }
+});
+
+app.put('/library/album/unfavourite/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await unfavouriteAlbum(id);
+    res.status(200).send();
+  } catch (err) {
+    console.error(`Failed to unfavourite album ${id}:`, err);
+    res.status(500).send({
+      message: `Failed to unfavourite album id ${id}`
     });
   }
 });
