@@ -81,9 +81,9 @@ export const deleteAlbum = async (id: string) => {
 };
 
 export const favouriteAlbum = async (id: string) => {
-  return AlbumModel.updateOne({ _id: id }, { favourite: true });
+  return AlbumModel.updateOne({ _id: id }, { favourite: true, favouritedAt: new Date() });
 };
 
 export const unfavouriteAlbum = async (id: string) => {
-  return AlbumModel.updateOne({ _id: id }, { favourite: false });
+  return AlbumModel.updateOne({ _id: id }, { favourite: false, favouritedAt: undefined });
 };

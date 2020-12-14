@@ -26,6 +26,12 @@ app.get('/library', async (req, res) => {
         .sort((a: any, b: any) =>
           isBefore(parseISO(a.createdAt), parseISO(b.createdAt)) ? 1 : -1
         )
+        .slice(0, 10),
+      albumsFavourite: data.albumsAll
+        .filter(album => album.favourite)
+        .sort((a: any, b: any) =>
+          isBefore(parseISO(a.favouriteAt), parseISO(b.favouriteAt)) ? 1 : -1
+        )
         .slice(0, 10)
     });
   } catch (err) {

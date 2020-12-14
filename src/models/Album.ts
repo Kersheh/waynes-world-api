@@ -15,29 +15,32 @@ import { modelOptions, prop, getModelForClass } from '@typegoose/typegoose';
   }
 })
 export class Album {
-  @prop({ type: String })
+  @prop()
   public album!: string;
 
-  @prop({ type: String })
+  @prop()
   public artist!: string;
 
-  @prop({ type: Number })
+  @prop()
   public year?: number;
 
-  @prop({ type: String })
+  @prop()
   public genre?: string;
 
-  @prop({ type: String })
+  @prop()
   public shelf?: string;
 
-  @prop({ type: String })
+  @prop()
   public comments?: string;
 
-  @prop({ type: String })
+  @prop()
   public artBase64?: string;
 
-  @prop({ type: Boolean })
-  public favourite = false;
+  @prop()
+  public favourite: boolean = false;
+
+  @prop()
+  public favouritedAt?: Date;
 }
 
 export default getModelForClass(Album);
