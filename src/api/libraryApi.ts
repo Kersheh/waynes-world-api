@@ -3,6 +3,7 @@ import { parseISO, isBefore } from 'date-fns';
 import app from 'app';
 import {
   getAlbums,
+  getAlbumArt,
   addAlbum,
   updateAlbum,
   deleteAlbum,
@@ -37,6 +38,18 @@ app.get('/library', async (req, res) => {
   } catch (err) {
     console.error('Failed to fetch albums', err);
     res.status(500).send({ message: 'Failed to fetch all albums' });
+  }
+});
+
+app.get('/library/album/art/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const albumArt = await getAlbumArt(id);
+    res.status(200).send({ albumArt });
+  } catch (err) {
+    console.error(`Failed to get album art ${id}:`, err);
+    res.status(500).send({ message: `Failed to get album art for id ${id}` });
   }
 });
 

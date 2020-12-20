@@ -27,6 +27,8 @@ export async function safeSpotifyRequest<T>(
     if (retry) {
       await setSpotifyAccessToken();
       return await safeSpotifyRequest(spotifyReq, false);
+    } else {
+      console.error('Failed to refresh token and retry request:', err);
     }
   }
 }

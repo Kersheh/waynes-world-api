@@ -13,7 +13,7 @@ export const getAlbums = async (
     order: 'asc'
   }
 ) => {
-  const albums = await AlbumModel.find();
+  const albums = await AlbumModel.find().select(['-artBase64']);
 
   switch (sort.sortBy) {
     case 'artist':
@@ -56,6 +56,11 @@ export const getAlbums = async (
   }
 };
 
+export const getAlbumArt = async (id: string) => {
+  const album = await AlbumModel.findOne({ _id: id });
+  return album?.artBase64;
+};
+
 export const addAlbum = async (album: Album) => {
   const existingAlbum = await AlbumModel.findOne({
     album: album.album,
@@ -81,9 +86,15 @@ export const deleteAlbum = async (id: string) => {
 };
 
 export const favouriteAlbum = async (id: string) => {
-  return AlbumModel.updateOne({ _id: id }, { favourite: true, favouritedAt: new Date() });
+  return AlbumModel.updateOne(
+    { _id: id },
+    { favourite: true, favouritedAt: new Date() }
+  );
 };
 
 export const unfavouriteAlbum = async (id: string) => {
-  return AlbumModel.updateOne({ _id: id }, { favourite: false, favouritedAt: undefined });
+  return AlbumModel.updateOne(
+    { _id: id },
+    { favourite: false, favouritedAt: undefined }
+  );
 };

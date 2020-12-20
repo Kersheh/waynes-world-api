@@ -36,8 +36,8 @@ export class Album {
   @prop()
   public artBase64?: string;
 
-  @prop()
-  public favourite: boolean = false;
+  @prop({ type: Boolean })
+  public favourite = false;
 
   @prop()
   public favouritedAt?: Date;
