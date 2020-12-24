@@ -57,7 +57,10 @@ app.post('/library/album', async (req, res) => {
   const album = req.body;
 
   try {
-    const id = await addAlbum(album);
+    const id = await addAlbum({
+      ...album,
+      artBase64: album.artBase64.replace('data:image/jpeg;base64,', '')
+    });
     res.status(201).send({ id });
   } catch (err) {
     console.error('Failed to create album:', err);
@@ -70,7 +73,10 @@ app.put('/library/album/:id', async (req, res) => {
   const album = req.body;
 
   try {
-    await updateAlbum(id, album);
+    await updateAlbum(id, {
+      ...album,
+      artBase64: album.artBase64.replace('data:image/jpeg;base64,', '')
+    });
     res.status(200).send({ id });
   } catch (err) {
     console.error(`Failed to update album ${id}:`, err);
