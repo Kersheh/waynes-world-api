@@ -59,7 +59,9 @@ app.post('/library/album', async (req, res) => {
   try {
     const id = await addAlbum({
       ...album,
-      artBase64: album.artBase64 ? album.artBase64.replace('data:image/jpeg;base64,', '') : undefined
+      artBase64: album.artBase64
+        ? album.artBase64.replace('data:image/jpeg;base64,', '')
+        : undefined
     });
     res.status(201).send({ id });
   } catch (err) {
@@ -75,7 +77,9 @@ app.put('/library/album/:id', async (req, res) => {
   try {
     await updateAlbum(id, {
       ...album,
-      artBase64: album.artBase64 ? album.artBase64.replace('data:image/jpeg;base64,', '') : undefined
+      artBase64: album.artBase64
+        ? album.artBase64.replace('data:image/jpeg;base64,', '')
+        : undefined
     });
     res.status(200).send({ id });
   } catch (err) {

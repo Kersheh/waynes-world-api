@@ -1,5 +1,7 @@
 {
   "name": "waynes-world-api",
+  "author": "Matt Breckon",
+  "license": "ISC",
   "version": "0.1.0",
   "main": "src/index.ts",
   "scripts": {
@@ -10,10 +12,8 @@
     "lint:fix": "eslint -c .eslintrc.yml 'src/**/*.ts' --fix",
     "db:up": "docker-compose up -d",
     "db:down": "docker-compose down",
-    "csv:migration": "tsc --project scripts/tsconfig.json"
+    "csv:migration": "NODE_PATH=./src nodemon ./src/scripts/csvMigration.ts"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@typegoose/typegoose": "^7.4.1",
     "@types/body-parser": "^1.19.0",
@@ -37,12 +37,14 @@
     "typescript": "^4.0.3"
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
     "csvtojson": "^2.0.10",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.4",
     "prettier": "^2.1.2"
   }
