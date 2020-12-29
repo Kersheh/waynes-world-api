@@ -37,7 +37,7 @@ const delay = () => new Promise(resolve => setTimeout(resolve, 2000));
         );
       } else if (
         res.body?.albums?.items[0]?.artists[0]?.name.toLowerCase() !==
-        album.Artist.toLowerCase()
+        album.Artist.toLowerCase().trim()
       ) {
         // track albums found but incorrect artist name, prevent accidentally grabbing wrong album
         albumsNotFound.push(`${album.Artist} - ${album.Album}`);
