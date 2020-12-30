@@ -1,4 +1,5 @@
 import fs from 'fs';
+import reader from 'readline-sync';
 import csvtojson from 'csvtojson';
 import fetch from 'node-fetch';
 import { startCase } from 'lodash';
@@ -15,6 +16,7 @@ const albumsFailedToInsert: Array<string> = [];
 
 const delay = () => new Promise(resolve => setTimeout(resolve, 2000));
 
+let i = 0;
 (async () => {
   try {
     await setSpotifyAccessToken();
@@ -23,6 +25,12 @@ const delay = () => new Promise(resolve => setTimeout(resolve, 2000));
     const albums = await csvtojson().fromFile('csv/albums.csv');
 
     for (const album of albums) {
+      // update token every 100 albums
+      i++;
+      if (i % 100 === 0) {
+        await setSpotifyAccessToken();
+      }
+
       const res = await SpotifyApi.search(
         `${album.Artist} ${album.Album}`,
         ['album'],
@@ -35,16 +43,24 @@ const delay = () => new Promise(resolve => setTimeout(resolve, 2000));
         console.log(
           `Album not found on spotify ${album.Artist} - ${album.Album}`
         );
-      } else if (
-        res.body?.albums?.items[0]?.artists[0]?.name.toLowerCase() !==
-        album.Artist.toLowerCase().trim()
-      ) {
-        // track albums found but incorrect artist name, prevent accidentally grabbing wrong album
-        albumsNotFound.push(`${album.Artist} - ${album.Album}`);
-        console.log(
-          `Album name found on spotify but not matching artist, failed to create ${album.Artist} - ${album.Album}`
-        );
       } else {
+        if (
+          res.body?.albums?.items[0]?.artists[0]?.name.toLowerCase() !==
+          album.Artist.toLowerCase().trim()
+        ) {
+          console.log(
+            `Album found: ${album.Album} as ${res.body?.albums?.items[0].name}, but not matching input Artist: ${res.body?.albums?.items[0].artists[0].name} compared to ${album.Artist}`
+          );
+
+          const input = reader.question('Add album? (Y/n) ');
+
+          if (input.toLowerCase() !== 'y') {
+            // track albums found but incorrect artist name, prevent accidentally grabbing wrong album
+            albumsNotFound.push(`${album.Artist} - ${album.Album}`);
+            continue;
+          }
+        }
+
         // update database with album
         const { id, artists, name, release_date, images } =
           res.body?.albums?.items[0] ?? {};
@@ -104,8 +120,9 @@ const delay = () => new Promise(resolve => setTimeout(resolve, 2000));
       'csv-migration-missing-albums.txt',
       albumsNotFound.reduce((acc, val) => `${acc}${val}\n`, ''),
       err => {
-        if (err)
+        if (err) {
           console.error('Failed to write to csv-migration-missing-albums.txt');
+        }
         console.log('csv-migration-missing-albums.txt updated');
       }
     );
@@ -113,8 +130,9 @@ const delay = () => new Promise(resolve => setTimeout(resolve, 2000));
       'csv-migration-failed-albums.txt',
       albumsFailedToInsert.reduce((acc, val) => `${acc}${val}\n`, ''),
       err => {
-        if (err)
+        if (err) {
           console.error('Failed to write to csv-migration-failed-albums.txt');
+        }
         console.log('csv-migration-failed-albums.txt updated');
       }
     );
