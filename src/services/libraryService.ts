@@ -3,7 +3,7 @@ import { sortBy, reverse } from 'lodash';
 import AlbumModel, { Album } from 'models/Album';
 
 export interface AlbumSort {
-  sortBy: 'artist' | 'album' | 'genre' | 'dateAdded';
+  sortBy: 'artist' | 'album' | 'genre' | 'year';
   order: 'asc' | 'desc';
 }
 
@@ -40,13 +40,13 @@ export const getAlbums = async (
             ? sortBy(albums, 'genre')
             : reverse(sortBy(albums, 'genre'))
       };
-    case 'dateAdded':
+    case 'year':
       return {
         albumsAll: albums,
         albumsAllSorted:
           sort.order === 'asc'
-            ? sortBy(albums, 'createdAt')
-            : reverse(sortBy(albums, 'createdAt'))
+            ? sortBy(albums, 'year')
+            : reverse(sortBy(albums, 'year'))
       };
     default:
       return {
